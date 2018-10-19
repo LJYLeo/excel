@@ -4,6 +4,7 @@ import com.codeshare.excel.Excel;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.InputStream;
@@ -43,12 +44,29 @@ public class Config {
 
     }
 
+    public static void loadVillages() {
+
+        File groupDirector = new File(get("groupOldExcelRootPath"));
+        File[] villages = groupDirector.listFiles();
+        if (villages != null && villages.length != 0) {
+            for (File village : villages) {
+                String villageName = village.getName();
+                Constants.villagesFromGroupDirector.add(StringUtils.substring(villageName, 0, StringUtils.indexOf(villageName, "村")));
+            }
+        }
+
+    }
+
     @SuppressWarnings("unchecked")
-    public static void loadVillageConfig() {
+    public static void loadVillageConfig(String fileName) {
 
         try {
 
-            String path = Config.class.getClassLoader().getResource("json.txt").toString();
+            Constants.oldToNewMap.clear();
+            Constants.oldExcelDataMap.clear();
+            Constants.newExcelDataMap.clear();
+
+            String path = Config.class.getClassLoader().getResource(fileName).toString();
             path = path.replace("file:", "");
             String json = FileUtils.readFileToString(new File(path), "UTF-8");
 
@@ -69,10 +87,36 @@ public class Config {
                     modelList.add(modelName);
                     Excel newExcel = new Excel();
                     newExcel.setStartRow(model.getInt("newExcelStart"));
-                    newExcel.setCell(model.getJSONArray("newExcelCellArray"));
+                    if (newExcel.getStartRow() == -1) {
+                        JSONArray newExcelCellArray = model.getJSONArray("newExcelCellArray");
+                        List<Map<String, Integer>> doubleCell = new ArrayList<Map<String, Integer>>();
+                        for (int k = 0; k < newExcelCellArray.size(); k++) {
+                            JSONObject cellArray = newExcelCellArray.getJSONObject(k);
+                            Map<String, Integer> map = new HashMap<String, Integer>();
+                            map.put("row", cellArray.getInt("row"));
+                            map.put("col", cellArray.getInt("col"));
+                            doubleCell.add(map);
+                        }
+                        newExcel.setDoubleCell(doubleCell);
+                    } else {
+                        newExcel.setCell(model.getJSONArray("newExcelCellArray"));
+                    }
                     Constants.newExcelDataMap.put(modelName, newExcel);
                     Excel oldExcel = new Excel();
-                    oldExcel.setCell(model.getJSONArray("oldExcelCellArray"));
+                    if (newExcel.getStartRow() == -1) {
+                        JSONArray newExcelCellArray = model.getJSONArray("oldExcelCellArray");
+                        List<Map<String, Integer>> doubleCell = new ArrayList<Map<String, Integer>>();
+                        for (int k = 0; k < newExcelCellArray.size(); k++) {
+                            JSONObject cellArray = newExcelCellArray.getJSONObject(k);
+                            Map<String, Integer> map = new HashMap<String, Integer>();
+                            map.put("row", cellArray.getInt("row"));
+                            map.put("col", cellArray.getInt("col"));
+                            doubleCell.add(map);
+                        }
+                        oldExcel.setDoubleCell(doubleCell);
+                    } else {
+                        oldExcel.setCell(model.getJSONArray("oldExcelCellArray"));
+                    }
                     modelMap.put(modelName, oldExcel);
                 }
                 Constants.oldToNewMap.put(sheetName, modelList);
@@ -88,6 +132,7 @@ public class Config {
                 oldExcel.setStartRow(excel.getInt("rowStart"));
                 oldExcel.setEndRow(excel.getInt("rowEnd"));
                 oldExcel.setCell(modelMap.get(modelName).getCell());
+                oldExcel.setDoubleCell(modelMap.get(modelName).getDoubleCell());
                 if (Constants.oldExcelDataMap.containsKey(excelName)) {
                     Constants.oldExcelDataMap.get(excelName).put(modelName, oldExcel);
                 } else {

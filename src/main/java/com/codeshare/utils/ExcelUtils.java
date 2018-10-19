@@ -32,9 +32,9 @@ public class ExcelUtils {
 
     }
 
-    public static void process() {
+    public static void process(String path, int type) {
 
-        File oldPath = new File(Constants.oldExcelRootPath);
+        File oldPath = new File(path);
         if (oldPath.isDirectory()) {
             File[] oldExcels = oldPath.listFiles();
             if (oldExcels != null && oldExcels.length != 0) {
@@ -42,24 +42,35 @@ public class ExcelUtils {
                 for (File excel : oldExcels) {
                     String wholePath = excel.getAbsolutePath();
                     String excelName = excel.getName();
-                    if (Constants.oldExcelDataMap.get(excelName) != null) {
+                    Map<String, Excel> oldToNewMap = Constants.oldExcelDataMap.get(excelName);
+                    if (oldToNewMap == null) {
+                        oldToNewMap = oldCommonMap;
+                    }
+                    if (oldToNewMap != null) {
                         HSSFWorkbook workbook = createWorkBook(wholePath);
                         for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
                             HSSFSheet sheet = workbook.getSheetAt(i);
                             if (Constants.oldToNewMap.get(sheet.getSheetName()) != null) {
                                 List<String> modelList = Constants.oldToNewMap.get(sheet.getSheetName());
                                 for (String model : modelList) {
-                                    HSSFWorkbook modelWorkBook = createWorkBook(Constants.modelExcelRootPath + "/" + model);
+                                    HSSFWorkbook modelWorkBook;
+                                    String targetFilePath = getNewDirector(wholePath, excelName, type) + "/" + model;
+                                    File targetFile = new File(targetFilePath);
+                                    if (targetFile.exists()) {
+                                        modelWorkBook = createWorkBook(targetFilePath);
+                                    } else {
+                                        modelWorkBook = createWorkBook(Constants.modelExcelRootPath + "/" + model);
+                                    }
                                     if (modelWorkBook != null) {
                                         HSSFSheet newSheet = modelWorkBook.getSheetAt(0);
-                                        Excel old = Constants.oldExcelDataMap.get(excelName).get(model);
+                                        Excel old = oldToNewMap.get(model);
                                         if (old == null) {
                                             old = oldCommonMap.get(model);
                                         }
                                         if (old != null && Constants.newExcelDataMap.get(model) != null) {
-                                            System.out.println(excelName);
+                                            System.out.println(excelName + "\t" + model);
                                             fillValueToSheet(sheet, newSheet, old, Constants.newExcelDataMap.get(model));
-                                            createTargetExcel(modelWorkBook, getNewDirector(excelName) + "/" + model);
+                                            createTargetExcel(modelWorkBook, targetFilePath);
                                         }
                                     }
                                 }
@@ -75,14 +86,33 @@ public class ExcelUtils {
 
     }
 
-    private static String getNewDirector(String oldExcelName) {
-        int index;
-        index = StringUtils.indexOf(oldExcelName, "村");
-        if (index == -1) {
-            index = StringUtils.indexOf(oldExcelName, ".");
+    /**
+     * @param wholePath
+     * @param oldExcelName
+     * @param type         0-村 1-组
+     * @return
+     */
+    private static String getNewDirector(String wholePath, String oldExcelName, int type) {
+
+        String path = Constants.resultExcelRootPath + "/其他";
+
+        for (String villageName : Constants.villagesFromGroupDirector) {
+
+            if (type == 0 && StringUtils.contains(oldExcelName, villageName)) {
+                path = Constants.resultExcelRootPath + "/" + villageName + "村/本级";
+                break;
+            } else if (type == 1 && StringUtils.contains(wholePath, villageName)) {
+                String groupName = StringUtils.substring(oldExcelName, 0, StringUtils.indexOf(oldExcelName, "."));
+                path = Constants.resultExcelRootPath + "/" + villageName + "村/" + groupName;
+                break;
+            }
+
         }
 
-        String path = Constants.resultExcelRootPath + "/" + StringUtils.substring(oldExcelName, 0, index + 1) + "/本级";
+        if (StringUtils.contains(path, "其他")) {
+            System.out.println("其他：" + wholePath);
+        }
+
         File file = new File(path);
         if (!file.exists()) {
             file.mkdirs();
@@ -191,6 +221,43 @@ public class ExcelUtils {
 
         int end = oldData.getEndRow() == -1 ? Integer.MAX_VALUE : oldData.getEndRow();
         for (int i = oldData.getStartRow(), j = modelData.getStartRow(); i <= end; i++, j++) {
+
+            // 竖表
+            if (modelData.getStartRow() == -1) {
+                try {
+                    // 老表也是竖表
+                    if (oldData.getStartRow() == -1) {
+                        for (int cell = 0; cell < oldData.getDoubleCell().size(); cell++) {
+                            Object[] value = checkCellType(oldSheet.getRow(oldData.getDoubleCell().get(cell).get("row")).getCell(oldData.getDoubleCell().get(cell).get("col")));
+                            if (Integer.parseInt(value[0].toString()) == 0 || Integer.parseInt(value[0].toString()) == 3) {
+                                newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue(Double.parseDouble(value[1].toString()));
+                            } else {
+                                if (value[1] instanceof String) {
+                                    newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue(Double.parseDouble(value[1].toString()));
+                                }
+                            }
+                        }
+                    } else {
+                        int rowNumber = oldData.getStartRow();
+                        for (int cell = 0; cell < oldData.getDoubleCell().size(); cell++) {
+                            Object[] value = checkCellType(oldSheet.getRow(rowNumber).getCell(oldData.getDoubleCell().get(cell).get("col")));
+                            if (Integer.parseInt(value[0].toString()) == 0 || Integer.parseInt(value[0].toString()) == 3) {
+                                newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue(Double.parseDouble(value[1].toString()));
+                            } else {
+                                if (value[1] instanceof String) {
+                                    newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue(Double.parseDouble(value[1].toString()));
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("竖表值错误！");
+                }
+                return;
+
+            }
+
+
             int emptyValueCount = 0;
             for (int k = 0; k < oldData.getCell().size(); k++) {
                 try {
@@ -253,6 +320,7 @@ public class ExcelUtils {
             fis = new FileInputStream(path);
             workBook = new HSSFWorkbook(fis);
         } catch (Exception e) {
+            System.out.println("错误：" + path);
             e.printStackTrace();
         } finally {
             close(fis);
@@ -284,8 +352,8 @@ public class ExcelUtils {
 
     public static void main(String[] args) {
         /*HSSFWorkbook workBook = ExcelUtils.getOldWorkBook();
-        System.out.println(workBook.getSheet("表12").getRow(7).getCell(1).getStringCellValue());*/
-        ExcelUtils.process();
+        System.out.println(workBook.getSheet("表12").getRow(7).getCell(1).getStringCellValue());
+        ExcelUtils.process();*/
     }
 
 }

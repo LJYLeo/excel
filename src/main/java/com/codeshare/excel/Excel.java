@@ -1,6 +1,7 @@
 package com.codeshare.excel;
 
 import java.util.List;
+import java.util.Map;
 
 public class Excel {
 
@@ -18,6 +19,11 @@ public class Excel {
      * 要映射的单元格列数，新老模板一一对应
      */
     private List<Integer> cell;
+
+    /**
+     * 行列坐标，新老模板一一对应
+     */
+    private List<Map<String, Integer>> doubleCell;
 
     public int getStartRow() {
         return startRow;
@@ -43,12 +49,21 @@ public class Excel {
         this.cell = cell;
     }
 
+    public List<Map<String, Integer>> getDoubleCell() {
+        return doubleCell;
+    }
+
+    public void setDoubleCell(List<Map<String, Integer>> doubleCell) {
+        this.doubleCell = doubleCell;
+    }
+
     @Override
     public String toString() {
         return "Excel{" +
                 "startRow=" + startRow +
                 ", endRow=" + endRow +
                 ", cell=" + cell +
+                ", doubleCell=" + doubleCell +
                 '}';
     }
 
