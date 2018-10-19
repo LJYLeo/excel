@@ -350,10 +350,39 @@ public class ExcelUtils {
         }
     }
 
+    /*public static String getMergedRegionValue(Sheet sheet ,int row , int column){
+        int sheetMergeCount = sheet.getNumMergedRegions();
+
+        for(int i = 0 ; i < sheetMergeCount ; i++){
+            CellRangeAddress ca = sheet.getMergedRegion(i);
+            int firstColumn = ca.getFirstColumn();
+            int lastColumn = ca.getLastColumn();
+            int firstRow = ca.getFirstRow();
+            int lastRow = ca.getLastRow();
+
+            if(row >= firstRow && row <= lastRow){
+
+                if(column >= firstColumn && column <= lastColumn){
+                    Row fRow = sheet.getRow(firstRow);
+                    Cell fCell = fRow.getCell(firstColumn);
+                    return getCellValue(fCell) ;
+                }
+            }
+        }
+
+        return null ;
+    }*/
+
+
     public static void main(String[] args) {
         /*HSSFWorkbook workBook = ExcelUtils.getOldWorkBook();
         System.out.println(workBook.getSheet("表12").getRow(7).getCell(1).getStringCellValue());
         ExcelUtils.process();*/
+
+        HSSFWorkbook workbook = createWorkBook("/Users/liujiayu/Desktop/村组表格最新/村表格/大港村.xls");
+        HSSFCell cell = workbook.getSheet("表7-1").getRow(12).getCell(1);
+        Object[] value = checkCellType(cell);
+        System.out.println(value[1].toString());
     }
 
 }

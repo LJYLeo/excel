@@ -65,7 +65,7 @@
           {
             "excelName":"农清明细01-货币资金清查登记表（系统下载）.xls",
             "newExcelStart":-1,
-            "oldExcelCellArray":[{"row":11,"col":2},{"row":12,"col":2}],
+            "oldExcelCellArray":[{"row":11,"col":3},{"row":12,"col":3}],
             "newExcelCellArray":[{"row":6,"col":2},{"row":10,"col":2}]
           }
         ]
