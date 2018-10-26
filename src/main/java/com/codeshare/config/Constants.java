@@ -15,6 +15,9 @@ public class Constants {
     public static Map<String, Map<String, Excel>> oldExcelDataMap = new HashMap<String, Map<String, Excel>>();
     public static Map<String, Excel> newExcelDataMap = new HashMap<String, Excel>();
 
+    public static Map<String, String> newExcelAddMap = new HashMap<String, String>(16);
+    public static Map<String, String> newExcelCheckMap = new HashMap<String, String>(16);
+
     public static String oldExcelRootPath;
     public static String oldExcelGroupRootPath;
     public static String modelExcelRootPath;

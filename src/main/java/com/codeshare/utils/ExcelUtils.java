@@ -1,5 +1,6 @@
 package com.codeshare.utils;
 
+import com.codeshare.config.Config;
 import com.codeshare.config.Constants;
 import com.codeshare.excel.Excel;
 import org.apache.commons.lang3.StringUtils;
@@ -229,10 +230,16 @@ public class ExcelUtils {
                         for (int cell = 0; cell < oldData.getDoubleCell().size(); cell++) {
                             Object[] value = checkCellType(oldSheet.getRow(oldData.getDoubleCell().get(cell).get("row")).getCell(oldData.getDoubleCell().get(cell).get("col")));
                             if (Integer.parseInt(value[0].toString()) == 0 || Integer.parseInt(value[0].toString()) == 3) {
+                                if (newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")) == null) {
+                                    newSheet.getRow(j).createCell(modelData.getDoubleCell().get(cell).get("col"));
+                                }
                                 newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue(Double.parseDouble(value[1].toString()));
                             } else {
                                 if (value[1] instanceof String) {
-                                    newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue(Double.parseDouble(value[1].toString()));
+                                    if (newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")) == null) {
+                                        newSheet.getRow(j).createCell(modelData.getDoubleCell().get(cell).get("col"));
+                                    }
+                                    newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue((String) value[1]);
                                 }
                             }
                         }
@@ -241,31 +248,53 @@ public class ExcelUtils {
                         for (int cell = 0; cell < oldData.getDoubleCell().size(); cell++) {
                             Object[] value = checkCellType(oldSheet.getRow(rowNumber).getCell(oldData.getDoubleCell().get(cell).get("col")));
                             if (Integer.parseInt(value[0].toString()) == 0 || Integer.parseInt(value[0].toString()) == 3) {
+                                if (newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")) == null) {
+                                    newSheet.getRow(j).createCell(modelData.getDoubleCell().get(cell).get("col"));
+                                }
                                 newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue(Double.parseDouble(value[1].toString()));
                             } else {
                                 if (value[1] instanceof String) {
-                                    newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue(Double.parseDouble(value[1].toString()));
+                                    if (newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")) == null) {
+                                        newSheet.getRow(j).createCell(modelData.getDoubleCell().get(cell).get("col"));
+                                    }
+                                    newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue((String) value[1]);
                                 }
                             }
                         }
                     }
                 } catch (Exception e) {
                     System.out.println("竖表值错误！");
+                    e.printStackTrace();
                 }
                 return;
 
             }
 
-
+            boolean isSetValue = true;
+            if (StringUtils.isNotBlank(Constants.newExcelCheckMap.get(model))) {
+                if (oldSheet.getRow(i).getCell(Integer.parseInt(Config.get("tagCheckCellNum"))) != null
+                        && !StringUtils.equals(oldSheet.getRow(i).getCell(Integer.parseInt(Config.get("tagCheckCellNum"))).getStringCellValue(), Constants.newExcelCheckMap.get(model))) {
+                    isSetValue = false;
+                }
+            }
             int emptyValueCount = 0;
             for (int k = 0; k < oldData.getCell().size(); k++) {
                 try {
+                    // -1列代表原表不存在，去新表直接新增
+                    if (oldData.getCell().get(k) == -1) {
+                        newSheet.getRow(j).getCell(modelData.getCell().get(k)).setCellValue(Constants.newExcelAddMap.get(model));
+                        emptyValueCount++;
+                        continue;
+                    }
                     Object[] value = checkCellType(oldSheet.getRow(i).getCell(oldData.getCell().get(k)));
                     System.out.println(i + "\t" + oldData.getCell().get(k) + "\t" + value[1]);
                     if (value[1] == null || StringUtils.isBlank(value[1].toString()) || "0.0".equals(value[1].toString())) {
                         emptyValueCount++;
                     }
                     if (Integer.parseInt(value[0].toString()) == 0 || Integer.parseInt(value[0].toString()) == 3) {
+                        if (newSheet.getRow(j).getCell(modelData.getCell().get(k)) == null) {
+                            newSheet.getRow(j).createCell(modelData.getCell().get(k));
+                        }
                         newSheet.getRow(j).getCell(modelData.getCell().get(k)).setCellValue(Double.parseDouble(value[1].toString()));
                     } else {
                         if (value[1] instanceof String) {
@@ -277,15 +306,25 @@ public class ExcelUtils {
                                 j--;
                                 break a;
                             }
-                            newSheet.getRow(j).getCell(modelData.getCell().get(k)).setCellValue((String) value[1]);
+                            if (isSetValue) {
+                                if (newSheet.getRow(j).getCell(modelData.getCell().get(k)) == null) {
+                                    newSheet.getRow(j).createCell(modelData.getCell().get(k));
+                                }
+                                newSheet.getRow(j).getCell(modelData.getCell().get(k)).setCellValue((String) value[1]);
+                            }
                         }
                     }
                 } catch (Exception e) {
-                    System.out.println("发生异常！程序继续执行！行：" + j + "，列：" + k + "，异常：" + e.toString());
+                    System.out.println("发生异常！程序继续执行！行：" + j + "，列：" + k + "，表：" + model + "，异常：" + e.toString());
                 }
             }
             if (oldData.getEndRow() == -1 && emptyValueCount == oldData.getCell().size()) {
 //                newSheet.removeRow(newSheet.getRow(j));
+                // 先塞的值，判断为空行在删掉
+                if (oldData.getCell().contains(-1)) {
+                    int index = oldData.getCell().indexOf(-1);
+                    newSheet.getRow(j).getCell(modelData.getCell().get(index)).setCellValue((String) null);
+                }
                 break;
             }
         }
@@ -345,6 +384,7 @@ public class ExcelUtils {
         }
 
         for (File firstDirector : new File(Constants.resultExcelRootPath).listFiles()) {
+            System.out.println(firstDirector);
             for (File secondDirector : firstDirector.listFiles()) {
                 String path = secondDirector.getAbsolutePath();
                 List<String> copyModelList = new ArrayList<String>();
@@ -413,9 +453,9 @@ public class ExcelUtils {
         System.out.println(workBook.getSheet("表12").getRow(7).getCell(1).getStringCellValue());
         ExcelUtils.process();*/
 
-        HSSFWorkbook workbook = createWorkBook("/Users/liujiayu/Desktop/村组表格最新/村表格/大港村.xls");
-        System.out.println(workbook.getSheet("表5").getRow(8));
-        HSSFCell cell = workbook.getSheet("表5").getRow(16).getCell(0);
+        HSSFWorkbook workbook = createWorkBook("/Users/liujiayu/Desktop/姚桥镇/村表格/华山村本级.xls");
+        System.out.println(workbook.getSheet("表12").getRow(38));
+        HSSFCell cell = workbook.getSheet("表12").getRow(38).getCell(12);
 //        Object[] value = checkCellType(cell);
         System.out.println(cell.getNumericCellValue());
 

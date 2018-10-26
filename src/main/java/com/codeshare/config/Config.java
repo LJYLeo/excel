@@ -65,6 +65,8 @@ public class Config {
             Constants.oldToNewMap.clear();
             Constants.oldExcelDataMap.clear();
             Constants.newExcelDataMap.clear();
+            Constants.newExcelAddMap.clear();
+            Constants.newExcelCheckMap.clear();
 
             String path = Config.class.getClassLoader().getResource(fileName).toString();
             path = path.replace("file:", "");
@@ -139,6 +141,12 @@ public class Config {
                     Map<String, Excel> map = new HashMap<String, Excel>(16);
                     map.put(modelName, oldExcel);
                     Constants.oldExcelDataMap.put(excelName, map);
+                }
+                if (excel.has("cate")) {
+                    Constants.newExcelAddMap.put(modelName, excel.getString("cate"));
+                }
+                if (excel.has("tag")) {
+                    Constants.newExcelCheckMap.put(modelName, excel.getString("tag"));
                 }
             }
 
