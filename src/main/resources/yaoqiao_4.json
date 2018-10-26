@@ -26,14 +26,9 @@
           {
             "excelName":"农清明细18-1资源性资产清查登记明细表-1（农用地）（系统下载）.xls",
             "newExcelStart":50,
-            "oldExcelCellArray":[8,10,14,12,17],
-            "newExcelCellArray":[4,6,11,13,16]
-          }
-        ]
-      },
-      {
-        "sheetName":"表20-4",
-        "newExcelList":[
+            "oldExcelCellArray":[-1,8,10,14,12,17],
+            "newExcelCellArray":[1,4,6,11,13,16]
+          },
           {
             "excelName":"农清明细20资源性资产清查登记总表（系统下载）.xls",
             "newExcelStart":-1,

@@ -7,8 +7,8 @@
           {
             "excelName":"农清明细08-2固定资产清查登记表-2（非经营性固定资产）（系统下载）.xls",
             "newExcelStart":169,
-            "oldExcelCellArray":[1,5,2,3,4,7,8,12,15],
-            "newExcelCellArray":[2,3,4,5,7,8,9,12,14]
+            "oldExcelCellArray":[-1,1,5,2,3,4,7,8,12,15],
+            "newExcelCellArray":[1,2,3,4,5,7,8,9,12,14]
           }
         ]
       },
@@ -18,8 +18,14 @@
           {
             "excelName":"农清明细18-1资源性资产清查登记明细表-1（农用地）（系统下载）.xls",
             "newExcelStart":30,
-            "oldExcelCellArray":[8,10,14,12,17],
-            "newExcelCellArray":[4,6,11,13,16]
+            "oldExcelCellArray":[-1,8,10,14,12,17],
+            "newExcelCellArray":[1,4,6,11,13,16]
+          },
+          {
+            "excelName":"农清明细20资源性资产清查登记总表（系统下载）.xls",
+            "newExcelStart":-1,
+            "oldExcelCellArray": [{"row":7,"col":7}],
+            "newExcelCellArray":[{"row":16,"col":2}]
           }
         ]
       },
@@ -39,17 +45,6 @@
               {"row":11,"col":6},{"row":13,"col":6},{"row":17,"col":6},{"row":19,"col":6},
               {"row":21,"col":6},{"row":12,"col":6}
             ]
-          }
-        ]
-      },
-      {
-        "sheetName":"表20-3",
-        "newExcelList":[
-          {
-            "excelName":"农清明细20资源性资产清查登记总表（系统下载）.xls",
-            "newExcelStart":-1,
-            "oldExcelCellArray": [{"row":7,"col":7}],
-            "newExcelCellArray":[{"row":16,"col":2}]
           }
         ]
       }
