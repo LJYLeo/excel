@@ -22,6 +22,9 @@ public class Main {
             }
         }
 
+        System.out.println("正在补未生成的表...");
+        ExcelUtils.supplyEmptyExcel();
+
     }
 
 }

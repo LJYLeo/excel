@@ -54,8 +54,8 @@
           {
             "excelName":"农清明细08-2固定资产清查登记表-2（非经营性固定资产）（系统下载）.xls",
             "newExcelStart":9,
-            "oldExcelCellArray":[1,5,2,4,7,8,14],
-            "newExcelCellArray":[2,3,4,7,8,9,14]
+            "oldExcelCellArray":[-1,1,5,2,4,7,8,14],
+            "newExcelCellArray":[1,2,3,4,7,8,9,14]
           }
         ]
       },
@@ -152,12 +152,7 @@
             "newExcelStart":10,
             "oldExcelCellArray": [1,2,4,7,17],
             "newExcelCellArray":[1,2,6,7,11]
-          }
-        ]
-      },
-      {
-        "sheetName":"表6",
-        "newExcelList":[
+          },
           {
             "excelName":"农清明细07-长期投资清查登记表（系统下载）.xls",
             "newExcelStart":10,

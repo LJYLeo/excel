@@ -2,7 +2,6 @@ package com.codeshare.utils;
 
 import com.codeshare.config.Constants;
 import com.codeshare.excel.Excel;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -13,7 +12,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -69,7 +67,7 @@ public class ExcelUtils {
                                         }
                                         if (old != null && Constants.newExcelDataMap.get(model) != null) {
                                             System.out.println(excelName + "\t" + model);
-                                            fillValueToSheet(sheet, newSheet, old, Constants.newExcelDataMap.get(model));
+                                            fillValueToSheet(model, sheet, newSheet, old, Constants.newExcelDataMap.get(model));
                                             createTargetExcel(modelWorkBook, targetFilePath);
                                         }
                                     }
@@ -217,9 +215,10 @@ public class ExcelUtils {
      * @param oldData
      * @param modelData
      */
-    private static void fillValueToSheet(HSSFSheet oldSheet, HSSFSheet newSheet, Excel oldData, Excel modelData) {
+    private static void fillValueToSheet(String model, HSSFSheet oldSheet, HSSFSheet newSheet, Excel oldData, Excel modelData) {
 
         int end = oldData.getEndRow() == -1 ? Integer.MAX_VALUE : oldData.getEndRow();
+        a:
         for (int i = oldData.getStartRow(), j = modelData.getStartRow(); i <= end; i++, j++) {
 
             // 竖表
@@ -270,6 +269,14 @@ public class ExcelUtils {
                         newSheet.getRow(j).getCell(modelData.getCell().get(k)).setCellValue(Double.parseDouble(value[1].toString()));
                     } else {
                         if (value[1] instanceof String) {
+                            if ("农清明细03-应收款项清查登记表（系统下载）.xls".equals(model) && "内部往来".equals((String) value[1]) && oldSheet.getRow(i).getCell(0).getNumericCellValue() == 0.0) {
+                                j--;
+                                continue a;
+                            }
+                            if ("农清明细03-应收款项清查登记表（系统下载）.xls".equals(model) && "村民监会意见(签章):".equals((String) value[1])) {
+                                j--;
+                                break a;
+                            }
                             newSheet.getRow(j).getCell(modelData.getCell().get(k)).setCellValue((String) value[1]);
                         }
                     }
@@ -278,7 +285,7 @@ public class ExcelUtils {
                 }
             }
             if (oldData.getEndRow() == -1 && emptyValueCount == oldData.getCell().size()) {
-                newSheet.removeRow(newSheet.getRow(j));
+//                newSheet.removeRow(newSheet.getRow(j));
                 break;
             }
         }
@@ -327,6 +334,33 @@ public class ExcelUtils {
         }
 
         return workBook;
+
+    }
+
+    public static void supplyEmptyExcel() {
+
+        List<String> allModelList = new ArrayList<String>();
+        for (File model : new File(Constants.modelExcelRootPath).listFiles()) {
+            allModelList.add(model.getName());
+        }
+
+        for (File firstDirector : new File(Constants.resultExcelRootPath).listFiles()) {
+            for (File secondDirector : firstDirector.listFiles()) {
+                String path = secondDirector.getAbsolutePath();
+                List<String> copyModelList = new ArrayList<String>();
+                copyModelList.addAll(allModelList);
+                for (File existExcel : secondDirector.listFiles()) {
+                    if (copyModelList.contains(existExcel.getName())) {
+                        copyModelList.remove(existExcel.getName());
+                    }
+                }
+                for (String supplyName : copyModelList) {
+                    System.out.println(path + "/" + supplyName);
+                    createTargetExcel(createWorkBook(Constants.modelExcelRootPath + "/" + supplyName), path + "/" + supplyName);
+                }
+            }
+        }
+
 
     }
 
@@ -380,9 +414,11 @@ public class ExcelUtils {
         ExcelUtils.process();*/
 
         HSSFWorkbook workbook = createWorkBook("/Users/liujiayu/Desktop/村组表格最新/村表格/大港村.xls");
-        HSSFCell cell = workbook.getSheet("表7-1").getRow(12).getCell(1);
-        Object[] value = checkCellType(cell);
-        System.out.println(value[1].toString());
+        System.out.println(workbook.getSheet("表5").getRow(8));
+        HSSFCell cell = workbook.getSheet("表5").getRow(16).getCell(0);
+//        Object[] value = checkCellType(cell);
+        System.out.println(cell.getNumericCellValue());
+
     }
 
 }
