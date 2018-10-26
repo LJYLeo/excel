@@ -1,0 +1,27 @@
+[
+  {
+    "sheet":[
+      {
+        "sheetName":"表20-5",
+        "newExcelList":[
+          {
+            "excelName":"农清明细20资源性资产清查登记总表（系统下载）.xls",
+            "newExcelStart":-1,
+            "oldExcelCellArray": [{"row":7,"col":7}],
+            "newExcelCellArray":[{"row":28,"col":2}]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "excel":[
+      {
+        "name":"all-cun",
+        "modelName":"农清明细20资源性资产清查登记总表（系统下载）.xls",
+        "rowStart":-1,
+        "rowEnd":-1
+      }
+    ]
+  }
+]
