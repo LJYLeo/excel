@@ -3,6 +3,7 @@
     "sheet":[
       {
         "sheetName":"表12",
+        "tagNum":13,
         "newExcelList":[
           {
             "excelName":"农清明细11-2应付款项清查登记表（系统下载）.xls",
@@ -54,8 +55,8 @@
           {
             "excelName":"农清明细08-2固定资产清查登记表-2（非经营性固定资产）（系统下载）.xls",
             "newExcelStart":9,
-            "oldExcelCellArray":[-1,1,5,2,4,7,8,14],
-            "newExcelCellArray":[1,2,3,4,7,8,9,14]
+            "oldExcelCellArray":[-1,1,5,2,4,7,8,12,14],
+            "newExcelCellArray":[1,2,3,4,7,8,9,12,14]
           }
         ]
       },
@@ -107,12 +108,12 @@
             "oldExcelCellArray": [
               {"row":10,"col":3},{"row":10,"col":5},{"row":10,"col":6},
               {"row":10,"col":9},{"row":10,"col":11},{"row":10,"col":14},
-              {"row":10,"col":16}
+              {"row":10,"col":16},{"row":10,"col":15}
             ],
             "newExcelCellArray":[
               {"row":6,"col":2},{"row":7,"col":2},{"row":8,"col":2},
               {"row":9,"col":2},{"row":15,"col":2},{"row":18,"col":2},
-              {"row":23,"col":2}
+              {"row":23,"col":2},{"row":22,"col":2}
             ]
           }
         ]
@@ -152,12 +153,13 @@
       },
       {
         "sheetName":"表6",
+        "tagNum":19,
         "newExcelList":[
           {
             "excelName":"农清明细02-短期投资清查登记表（系统下载）.xls",
             "newExcelStart":10,
-            "oldExcelCellArray": [1,2,4,7,17],
-            "newExcelCellArray":[1,2,6,7,11]
+            "oldExcelCellArray": [-1,1,2,4,7,17],
+            "newExcelCellArray":[3,1,2,6,7,11]
           },
           {
             "excelName":"农清明细07-长期投资清查登记表（系统下载）.xls",
@@ -278,7 +280,8 @@
         "modelName":"农清明细02-短期投资清查登记表（系统下载）.xls",
         "rowStart":9,
         "rowEnd":-1,
-        "tag":"短期"
+        "tag":"短期",
+        "cate":"1"
       },
       {
         "name":"all-cun",

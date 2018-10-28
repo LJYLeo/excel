@@ -67,6 +67,7 @@ public class Config {
             Constants.newExcelDataMap.clear();
             Constants.newExcelAddMap.clear();
             Constants.newExcelCheckMap.clear();
+            Constants.newExcelCheckNumMap.clear();
 
             String path = Config.class.getClassLoader().getResource(fileName).toString();
             path = path.replace("file:", "");
@@ -81,6 +82,9 @@ public class Config {
             for (int i = 0; i < sheets.size(); i++) {
                 JSONObject sheet = sheets.getJSONObject(i);
                 String sheetName = sheet.getString("sheetName");
+                if (sheet.has("tagNum")) {
+                    Constants.newExcelCheckNumMap.put(sheetName, sheet.getInt("tagNum"));
+                }
                 JSONArray models = sheet.getJSONArray("newExcelList");
                 List<String> modelList = new ArrayList<String>();
                 for (int j = 0; j < models.size(); j++) {

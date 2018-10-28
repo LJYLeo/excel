@@ -12,7 +12,9 @@ import org.apache.poi.ss.usermodel.Cell;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +29,8 @@ public class ExcelUtils {
 //    public static String resultExcelRootPath = "C:/Users/18046184/Desktop/result/北角村/本级";
 //    public static String resultExcelPath = "C:/Users/18046184/Desktop/result/北角村/本级/农清明细11-2应付款项清查登记表（系统下载）.xls";
 
-    static {
-
-    }
+    private static SimpleDateFormat oldFormat = new SimpleDateFormat(Config.get("oldTimeFormat"));
+    private static SimpleDateFormat format = new SimpleDateFormat(Config.get("timeFormat"));
 
     public static void process(String path, int type) {
 
@@ -67,8 +68,15 @@ public class ExcelUtils {
                                             old = oldCommonMap.get(model);
                                         }
                                         if (old != null && Constants.newExcelDataMap.get(model) != null) {
-                                            System.out.println(excelName + "\t" + model);
-                                            fillValueToSheet(model, sheet, newSheet, old, Constants.newExcelDataMap.get(model));
+                                            int end = fillValueToSheet(modelWorkBook, excelName, model, sheet, newSheet, old, Constants.newExcelDataMap.get(model));
+                                            newSheet.setForceFormulaRecalculation(true);
+                                            System.out.println(excelName + "\t" + model + "\t" + end);
+                                            Map<String, Integer> map = Constants.newExcelLastLocation.get(excelName);
+                                            if (map == null) {
+                                                map = new HashMap<String, Integer>(1);
+                                                Constants.newExcelLastLocation.put(excelName, map);
+                                            }
+                                            map.put(model, end);
                                             createTargetExcel(modelWorkBook, targetFilePath);
                                         }
                                     }
@@ -170,6 +178,9 @@ public class ExcelUtils {
         try {
             fos = new FileOutputStream(targetPath);
             workBook.write(fos);
+            HSSFWorkbook workbook = createWorkBook(targetPath);
+            workbook.setForceFormulaRecalculation(true);
+            workbook.write(fos);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -216,11 +227,15 @@ public class ExcelUtils {
      * @param oldData
      * @param modelData
      */
-    private static void fillValueToSheet(String model, HSSFSheet oldSheet, HSSFSheet newSheet, Excel oldData, Excel modelData) {
+    private static int fillValueToSheet(HSSFWorkbook modelWorkbook, String excelName, String model, HSSFSheet oldSheet, HSSFSheet newSheet, Excel oldData, Excel modelData) {
 
         int end = oldData.getEndRow() == -1 ? Integer.MAX_VALUE : oldData.getEndRow();
+        int j = modelData.getStartRow();
+        if (Constants.newExcelLastLocation.get(excelName) != null && Constants.newExcelLastLocation.get(excelName).get(model) != null) {
+            j = Constants.newExcelLastLocation.get(excelName).get(model);
+        }
         a:
-        for (int i = oldData.getStartRow(), j = modelData.getStartRow(); i <= end; i++, j++) {
+        for (int i = oldData.getStartRow(); i <= end; i++, j++) {
 
             // 竖表
             if (modelData.getStartRow() == -1) {
@@ -235,12 +250,17 @@ public class ExcelUtils {
                                 }
                                 newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue(Double.parseDouble(value[1].toString()));
                             } else {
-                                if (value[1] instanceof String) {
-                                    if (newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")) == null) {
-                                        newSheet.getRow(j).createCell(modelData.getDoubleCell().get(cell).get("col"));
-                                    }
+                                if (newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")) == null) {
+                                    newSheet.getRow(j).createCell(modelData.getDoubleCell().get(cell).get("col"));
+                                }
+                                if (value[1] == null || StringUtils.isBlank((String) value[1])) {
+                                    System.out.println("空值插入，行：" + modelData.getDoubleCell().get(cell).get("row") + "，列：" + modelData.getDoubleCell().get(cell).get("col"));
+                                    newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellType(HSSFCell.CELL_TYPE_BLANK);
+                                    newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue((String) null);
+                                } else {
                                     newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue((String) value[1]);
                                 }
+//                                newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue((String) value[1]);
                             }
                         }
                     } else {
@@ -253,12 +273,17 @@ public class ExcelUtils {
                                 }
                                 newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue(Double.parseDouble(value[1].toString()));
                             } else {
-                                if (value[1] instanceof String) {
-                                    if (newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")) == null) {
-                                        newSheet.getRow(j).createCell(modelData.getDoubleCell().get(cell).get("col"));
-                                    }
+                                if (newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")) == null) {
+                                    newSheet.getRow(j).createCell(modelData.getDoubleCell().get(cell).get("col"));
+                                }
+                                if (value[1] == null || StringUtils.isBlank((String) value[1])) {
+                                    System.out.println("空值插入，行：" + modelData.getDoubleCell().get(cell).get("row") + "，列：" + modelData.getDoubleCell().get(cell).get("col"));
+                                    newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellType(HSSFCell.CELL_TYPE_BLANK);
+                                    newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue((String) null);
+                                } else {
                                     newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue((String) value[1]);
                                 }
+//                                    newSheet.getRow(modelData.getDoubleCell().get(cell).get("row")).getCell(modelData.getDoubleCell().get(cell).get("col")).setCellValue((String) value[1]);
                             }
                         }
                     }
@@ -266,14 +291,14 @@ public class ExcelUtils {
                     System.out.println("竖表值错误！");
                     e.printStackTrace();
                 }
-                return;
+                return modelData.getStartRow();
 
             }
 
             boolean isSetValue = true;
-            if (StringUtils.isNotBlank(Constants.newExcelCheckMap.get(model))) {
-                if (oldSheet.getRow(i).getCell(Integer.parseInt(Config.get("tagCheckCellNum"))) != null
-                        && !StringUtils.equals(oldSheet.getRow(i).getCell(Integer.parseInt(Config.get("tagCheckCellNum"))).getStringCellValue(), Constants.newExcelCheckMap.get(model))) {
+            if (Constants.newExcelCheckNumMap.get(oldSheet.getSheetName()) != null && StringUtils.isNotBlank(Constants.newExcelCheckMap.get(model))) {
+                if (oldSheet.getRow(i).getCell(Constants.newExcelCheckNumMap.get(oldSheet.getSheetName())) != null
+                        && !StringUtils.equals(oldSheet.getRow(i).getCell(Constants.newExcelCheckNumMap.get(oldSheet.getSheetName())).getStringCellValue(), Constants.newExcelCheckMap.get(model))) {
                     isSetValue = false;
                 }
             }
@@ -294,22 +319,24 @@ public class ExcelUtils {
                     if (Integer.parseInt(value[0].toString()) == 0 || Integer.parseInt(value[0].toString()) == 3) {
                         if (newSheet.getRow(j).getCell(modelData.getCell().get(k)) == null) {
                             newSheet.getRow(j).createCell(modelData.getCell().get(k));
-                        }
+                        }/*
+                        HSSFCellStyle cellStyle = modelWorkbook.createCellStyle();
+                        cellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("0.00"));
+                        newSheet.getRow(j).getCell(modelData.getCell().get(k)).setCellStyle(cellStyle);*/
                         newSheet.getRow(j).getCell(modelData.getCell().get(k)).setCellValue(Double.parseDouble(value[1].toString()));
                     } else {
-                        if (value[1] instanceof String) {
-                            if ("农清明细03-应收款项清查登记表（系统下载）.xls".equals(model) && "内部往来".equals((String) value[1]) && oldSheet.getRow(i).getCell(0).getNumericCellValue() == 0.0) {
-                                j--;
-                                continue a;
+                        if (isSetValue) {
+                            if (newSheet.getRow(j).getCell(modelData.getCell().get(k)) == null) {
+                                newSheet.getRow(j).createCell(modelData.getCell().get(k));
                             }
-                            if ("农清明细03-应收款项清查登记表（系统下载）.xls".equals(model) && "村民监会意见(签章):".equals((String) value[1])) {
-                                j--;
-                                break a;
+                            if (value[1] != null && value[1].toString().matches("\\d{4}-\\d{2}-\\d{2}")) {
+                                value[1] = format.format(oldFormat.parse(value[1].toString()));
                             }
-                            if (isSetValue) {
-                                if (newSheet.getRow(j).getCell(modelData.getCell().get(k)) == null) {
-                                    newSheet.getRow(j).createCell(modelData.getCell().get(k));
-                                }
+                            if (value[1] == null || StringUtils.isBlank((String) value[1])) {
+                                System.out.println("空值插入，行：" + j + "，列：" + modelData.getCell().get(k));
+//                                newSheet.getRow(j).getCell(modelData.getCell().get(k)).setCellType(HSSFCell.CELL_TYPE_BLANK);
+                                newSheet.getRow(j).getCell(modelData.getCell().get(k)).setCellValue((String) null);
+                            } else {
                                 newSheet.getRow(j).getCell(modelData.getCell().get(k)).setCellValue((String) value[1]);
                             }
                         }
@@ -323,11 +350,17 @@ public class ExcelUtils {
                 // 先塞的值，判断为空行在删掉
                 if (oldData.getCell().contains(-1)) {
                     int index = oldData.getCell().indexOf(-1);
-                    newSheet.getRow(j).getCell(modelData.getCell().get(index)).setCellValue((String) null);
+//                    newSheet.getRow(j).getCell(modelData.getCell().get(index)).setCellValue((String) null);
+                    newSheet.getRow(j).getCell(modelData.getCell().get(index)).setCellType(HSSFCell.CELL_TYPE_BLANK);
                 }
-                break;
+                return j;
+            }
+            if (!isSetValue) {
+                j--;
             }
         }
+
+        return j - 1;
 
     }
 
@@ -401,6 +434,24 @@ public class ExcelUtils {
             }
         }
 
+    }
+
+    public static void changeDirectorName() {
+
+        for (File firstDirector : new File(Constants.resultExcelRootPath).listFiles()) {
+            for (File secondDirector : firstDirector.listFiles()) {
+                String oldWholePath = secondDirector.getAbsolutePath();
+                String oldPath = oldWholePath.substring(Constants.resultExcelRootPath.length());
+                if (new File(Constants.oldExcelGroupRootPath + oldPath + ".xls").exists()) {
+                    HSSFWorkbook workbook = createWorkBook(Constants.oldExcelGroupRootPath + oldPath + ".xls");
+                    String groupName = workbook.getSheet("表8").getRow(3).getCell(0).getStringCellValue();
+                    String realGroupName = groupName.substring(groupName.lastIndexOf("村") + 1);
+                    String realPath = oldWholePath.substring(0, oldWholePath.lastIndexOf("/") + 1) + realGroupName;
+                    secondDirector.renameTo(new File(realPath));
+                }
+            }
+        }
+
 
     }
 
@@ -448,16 +499,26 @@ public class ExcelUtils {
     }*/
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         /*HSSFWorkbook workBook = ExcelUtils.getOldWorkBook();
         System.out.println(workBook.getSheet("表12").getRow(7).getCell(1).getStringCellValue());
         ExcelUtils.process();*/
 
-        HSSFWorkbook workbook = createWorkBook("/Users/liujiayu/Desktop/姚桥镇/村表格/华山村本级.xls");
-        System.out.println(workbook.getSheet("表12").getRow(38));
-        HSSFCell cell = workbook.getSheet("表12").getRow(38).getCell(12);
+        /*HSSFWorkbook workbook = createWorkBook("/Users/liujiayu/Desktop/result/华山村/本级/农清明细03-应收款项清查登记表（系统下载）.xls");
+        /*System.out.println(workbook.getSheet("表12").getRow(38));
+        HSSFCell cell = workbook.getSheet("表12").getRow(38).getCell(12);*/
 //        Object[] value = checkCellType(cell);
-        System.out.println(cell.getNumericCellValue());
+        /*HSSFCell cell = workbook.getSheetAt(0).getRow(7).getCell(5);
+        System.out.println(workbook.getSheetAt(0).getRow(7).getCell(5).getNumericCellValue());
+        System.out.println(workbook.getSheetAt(0).getRow(7).getCell(5).getCellType());
+        cell.setCellFormula(cell.getCellFormula());
+        workbook.setForceFormulaRecalculation(true);
+        workbook.write(new FileOutputStream("/Users/liujiayu/Desktop/result/华山村/本级/农清明细03-应收款项清查登记表（系统下载）.xls"));*/
+
+//        System.out.println("2010-10-1".matches("\\d{4}-\\d{2}-\\d{2}"));
+
+        String name = "镇江市镇江新区姚桥镇迎北村迎北1";
+        System.out.println(name.substring(name.lastIndexOf("村") + 1));
 
     }
 
