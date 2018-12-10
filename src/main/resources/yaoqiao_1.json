@@ -108,12 +108,12 @@
             "oldExcelCellArray": [
               {"row":10,"col":3},{"row":10,"col":5},{"row":10,"col":6},
               {"row":10,"col":9},{"row":10,"col":11},{"row":10,"col":12},
-              {"row":10,"col":13},{"row":10,"col":16},{"row":10,"col":15}
+              {"row":10,"col":13},{"row":10,"col":16},{"row":10,"col":15},{"row":10,"col":15}
             ],
             "newExcelCellArray":[
               {"row":6,"col":2},{"row":7,"col":2},{"row":8,"col":2},
               {"row":9,"col":2},{"row":15,"col":2},{"row":18,"col":2},
-              {"row":19,"col":2},{"row":23,"col":2},{"row":22,"col":2}
+              {"row":19,"col":2},{"row":23,"col":2},{"row":22,"col":2},{"row":25,"col":6}
             ]
           }
         ]
@@ -254,7 +254,34 @@
         "name":"all-cun",
         "modelName":"资产负债表（组织类）.xls",
         "rowStart":10,
-        "rowEnd":10
+        "rowEnd":10,
+        "defaultValueArray":[
+          {"row":6,"col":2},{"row":7,"col":2},{"row":8,"col":2},
+          {"row":9,"col":2},{"row":11,"col":2},{"row":12,"col":2},
+          {"row":15,"col":2},{"row":16,"col":2},{"row":18,"col":2},
+          {"row":19,"col":2},{"row":21,"col":2},{"row":22,"col":2},
+          {"row":23,"col":2},{"row":24,"col":2},{"row":25,"col":2},
+          {"row":26,"col":2},
+          {"row":6,"col":3},{"row":7,"col":3},{"row":8,"col":3},
+          {"row":9,"col":3},{"row":11,"col":3},{"row":12,"col":3},
+          {"row":15,"col":3},{"row":16,"col":3},{"row":18,"col":3},
+          {"row":19,"col":3},{"row":21,"col":3},{"row":22,"col":3},
+          {"row":23,"col":3},{"row":24,"col":3},{"row":25,"col":3},
+          {"row":26,"col":3},
+          {"row":6,"col":6},{"row":7,"col":6},{"row":8,"col":6},
+          {"row":9,"col":6},{"row":11,"col":6},{"row":12,"col":6},
+          {"row":13,"col":6},{"row":14,"col":6},{"row":17,"col":6},
+          {"row":18,"col":6},{"row":19,"col":6},{"row":20,"col":6},
+          {"row":21,"col":6},{"row":24,"col":6},{"row":25,"col":6},
+          {"row":26,"col":6}, {"row":27,"col":6},
+          {"row":6,"col":7},{"row":7,"col":7},{"row":8,"col":7},
+          {"row":9,"col":7},{"row":11,"col":7},{"row":12,"col":7},
+          {"row":13,"col":7},{"row":14,"col":7},{"row":17,"col":7},
+          {"row":18,"col":7},{"row":19,"col":7},{"row":20,"col":7},
+          {"row":21,"col":7},{"row":24,"col":7},{"row":25,"col":7},
+          {"row":26,"col":7}, {"row":27,"col":7}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
