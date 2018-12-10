@@ -178,49 +178,79 @@
         "modelName":"应付款项清查登记表.xls",
         "rowStart":8,
         "rowEnd":-1,
-        "tag":"应付款"
+        "tag":"应付款",
+        "defaultValueArray":[
+          {"row":-1,"col":8},{"row":-1,"col":9},{"row":-1,"col":10},{"row":-1,"col":11}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
         "modelName":"应付福利费清查登记表.xls",
         "rowStart":8,
         "rowEnd":-1,
-        "tag":"应付福利费"
+        "tag":"应付福利费",
+        "defaultValueArray":[
+          {"row":-1,"col":4},{"row":-1,"col":5},{"row":-1,"col":6},
+          {"row":-1,"col":7},{"row":-1,"col":8},{"row":-1,"col":9}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
         "modelName":"长期借款及应付款清查登记表.xls",
         "rowStart":8,
         "rowEnd":-1,
-        "tag":"长期借款"
+        "tag":"长期借款",
+        "defaultValueArray":[
+          {"row":-1,"col":8},{"row":-1,"col":9},{"row":-1,"col":10},{"row":-1,"col":11}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
         "modelName":"短期借款清查登记表.xls",
         "rowStart":8,
         "rowEnd":-1,
-        "tag":"短期借款"
+        "tag":"短期借款",
+        "defaultValueArray":[
+          {"row":-1,"col":8},{"row":-1,"col":9},{"row":-1,"col":10},{"row":-1,"col":11}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
         "modelName":"专项应付款清查登记表.xls",
         "rowStart":8,
         "rowEnd":-1,
-        "tag":"专项应付"
+        "tag":"专项应付",
+        "defaultValueArray":[
+          {"row":-1,"col":5},{"row":-1,"col":7},{"row":-1,"col":9},{"row":-1,"col":10},{"row":-1,"col":11}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
         "modelName":"应付工资清查登记表.xls",
         "rowStart":8,
         "rowEnd":-1,
-        "tag":"应付工资"
+        "tag":"应付工资",
+        "defaultValueArray":[
+          {"row":-1,"col":4},{"row":-1,"col":5},{"row":-1,"col":6},{"row":-1,"col":7}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
         "modelName":"一事一议资金清查登记表.xls",
         "rowStart":8,
         "rowEnd":-1,
-        "tag":"一事一议"
+        "tag":"一事一议",
+        "defaultValueArray":[
+          {"row":-1,"col":3},{"row":-1,"col":4},{"row":-1,"col":5},
+          {"row":-1,"col":6},{"row":-1,"col":7},{"row":-1,"col":10}
+        ],
+        "defaultValue":0
       },
 
       {
@@ -228,27 +258,54 @@
         "modelName":"固定资产清查登记表-2（非经营性固定资产）.xls",
         "rowStart":9,
         "rowEnd":-1,
-        "cate":"房屋建筑"
+        "cate":"房屋建筑",
+        "defaultValueArray":[
+          {"row":-1,"col":8},{"row":-1,"col":9},{"row":-1,"col":12},{"row":-1,"col":14}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
         "modelName":"资源性资产清查登记明细表-1（农用地）.xls",
         "rowStart":8,
         "rowEnd":-1,
-        "cate":"耕地"
+        "cate":"耕地",
+        "defaultValueArray":[
+          {"row":-1,"col":4},{"row":-1,"col":6},{"row":-1,"col":11},{"row":-1,"col":13},{"row":-1,"col":14}
+        ],
+        "defaultValue":0
       },
 
       {
         "name":"all-cun",
         "modelName":"货币资金清查登记表.xls",
         "rowStart":-1,
-        "rowEnd":-1
+        "rowEnd":-1,
+        "defaultValueArray":[
+          {"row":6,"col":2},{"row":10,"col":2}, {"row":10,"col":8}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
         "modelName":"所有者权益清查登记表.xls",
         "rowStart":-1,
-        "rowEnd":-1
+        "rowEnd":-1,
+        "defaultValueArray":[
+          {"row":8,"col":2},{"row":9,"col":2}, {"row":10,"col":2},
+          {"row":12,"col":2},{"row":13,"col":2},{"row":14,"col":2},
+          {"row":15,"col":2},{"row":16,"col":2},{"row":17,"col":2},
+          {"row":18,"col":2},{"row":19,"col":2},
+          {"row":8,"col":3},{"row":9,"col":3}, {"row":10,"col":3},
+          {"row":12,"col":3},{"row":13,"col":3},{"row":14,"col":3},
+          {"row":15,"col":3},{"row":16,"col":3},{"row":17,"col":3},
+          {"row":18,"col":3},{"row":19,"col":3},
+          {"row":8,"col":4},{"row":9,"col":4}, {"row":10,"col":4},
+          {"row":12,"col":4},{"row":13,"col":4},{"row":14,"col":4},
+          {"row":15,"col":4},{"row":16,"col":4},{"row":17,"col":4},
+          {"row":18,"col":4},{"row":19,"col":4}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
@@ -287,20 +344,32 @@
         "name":"all-cun",
         "modelName":"在建工程清查登记表-2（非经营性在建工程）.xls",
         "rowStart":7,
-        "rowEnd":-1
+        "rowEnd":-1,
+        "defaultValueArray":[
+          {"row":-1,"col":8},{"row":-1,"col":10}, {"row":-1,"col":12}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
         "modelName":"资源性资产清查登记明细表-3（未利用地、附报）.xls",
         "rowStart":8,
         "rowEnd":-1,
-        "cate":"\"四荒\"地"
+        "cate":"“四荒”地",
+        "defaultValueArray":[
+          {"row":-1,"col":2},{"row":-1,"col":4},{"row":-1,"col":6},{"row":-1,"col":11}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
         "modelName":"待界定资产清查登记表（账外）.xls",
         "rowStart":7,
-        "rowEnd":-1
+        "rowEnd":-1,
+        "defaultValueArray":[
+          {"row":-1,"col":7}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
@@ -308,20 +377,40 @@
         "rowStart":9,
         "rowEnd":-1,
         "tag":"短期",
-        "cate":"1"
+        "cate":"1",
+        "defaultValueArray":[
+          {"row":-1,"col":6},{"row":-1,"col":7},{"row":-1,"col":8},{"row":-1,"col":9}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
         "modelName":"长期投资清查登记表.xls",
         "rowStart":9,
         "rowEnd":-1,
-        "tag":"长期"
+        "tag":"长期",
+        "defaultValueArray":[
+          {"row":-1,"col":7},{"row":-1,"col":8},{"row":-1,"col":12},{"row":-1,"col":13}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
         "modelName":"资源性资产清查登记总表.xls",
         "rowStart":-1,
-        "rowEnd":-1
+        "rowEnd":-1,
+        "defaultValueArray":[
+          {"row":7,"col":2},{"row":8,"col":2}, {"row":9,"col":2},
+          {"row":10,"col":2},{"row":11,"col":2},{"row":12,"col":2},
+          {"row":13,"col":2},{"row":14,"col":2},{"row":15,"col":2},
+          {"row":16,"col":2},{"row":17,"col":2},{"row":18,"col":2},
+          {"row":20,"col":2},{"row":21,"col":2},{"row":22,"col":2},
+          {"row":23,"col":2},{"row":24,"col":2},{"row":25,"col":2},
+          {"row":26,"col":2},{"row":28,"col":2},{"row":30,"col":2},
+          {"row":31,"col":2},{"row":32,"col":2},{"row":34,"col":2},
+          {"row":35,"col":2}
+        ],
+        "defaultValue":0
       }
     ]
   }
