@@ -5,7 +5,7 @@
         "sheetName":"表23-2",
         "newExcelList":[
           {
-            "excelName":"农清明细19-1资产负债表（组织类）（系统下载必填）.xls",
+            "excelName":"资产负债表（组织类）.xls",
             "newExcelStart":-1,
             "oldExcelCellArray":[
               {"row":10,"col":3},{"row":10,"col":4},{"row":10,"col":8},{"row":10,"col":7},
@@ -24,13 +24,13 @@
         "sheetName":"表20-4",
         "newExcelList":[
           {
-            "excelName":"农清明细18-1资源性资产清查登记明细表-1（农用地）（系统下载）.xls",
+            "excelName":"资源性资产清查登记明细表-1（农用地）.xls",
             "newExcelStart":50,
             "oldExcelCellArray":[-1,8,10,14,12,17],
             "newExcelCellArray":[1,4,6,11,13,16]
           },
           {
-            "excelName":"农清明细20资源性资产清查登记总表（系统下载）.xls",
+            "excelName":"资源性资产清查登记总表.xls",
             "newExcelStart":-1,
             "oldExcelCellArray": [{"row":7,"col":7}],
             "newExcelCellArray":[{"row":18,"col":2}]
@@ -43,20 +43,20 @@
     "excel":[
       {
         "name":"all-cun",
-        "modelName":"农清明细19-1资产负债表（组织类）（系统下载必填）.xls",
+        "modelName":"资产负债表（组织类）.xls",
         "rowStart":10,
         "rowEnd":10
       },
       {
         "name":"all-cun",
-        "modelName":"农清明细18-1资源性资产清查登记明细表-1（农用地）（系统下载）.xls",
+        "modelName":"资源性资产清查登记明细表-1（农用地）.xls",
         "rowStart":8,
         "rowEnd":-1,
         "cate":"其他农用地"
       },
       {
         "name":"all-cun",
-        "modelName":"农清明细20资源性资产清查登记总表（系统下载）.xls",
+        "modelName":"资源性资产清查登记总表.xls",
         "rowStart":-1,
         "rowEnd":-1
       }

@@ -5,7 +5,7 @@
         "sheetName":"表5",
         "newExcelList":[
           {
-            "excelName":"农清明细03-应收款项清查登记表（系统下载）.xls",
+            "excelName":"应收款项清查登记表.xls",
             "newExcelStart":8,
             "oldExcelCellArray":[1,3,6,7,12],
             "newExcelCellArray":[1,5,6,7,9]
@@ -16,7 +16,7 @@
         "sheetName":"表7-2",
         "newExcelList":[
           {
-            "excelName":"农清明细08-2固定资产清查登记表-2（非经营性固定资产）（系统下载）.xls",
+            "excelName":"固定资产清查登记表-2（非经营性固定资产）.xls",
             "newExcelStart":89,
             "oldExcelCellArray":[-1,1,4,2,3,6,7,11,14,18],
             "newExcelCellArray":[1,2,3,5,7,8,9,12,14,17]
@@ -27,13 +27,13 @@
         "sheetName":"表20-2",
         "newExcelList":[
           {
-            "excelName":"农清明细18-1资源性资产清查登记明细表-1（农用地）（系统下载）.xls",
+            "excelName":"资源性资产清查登记明细表-1（农用地）.xls",
             "newExcelStart":20,
             "oldExcelCellArray":[-1,8,10,14,12,17],
             "newExcelCellArray":[1,4,6,11,13,16]
           },
           {
-            "excelName":"农清明细20资源性资产清查登记总表（系统下载）.xls",
+            "excelName":"资源性资产清查登记总表.xls",
             "newExcelStart":-1,
             "oldExcelCellArray": [{"row":7,"col":7}],
             "newExcelCellArray":[{"row":11,"col":2}]
@@ -44,7 +44,7 @@
         "sheetName":"表23-1",
         "newExcelList":[
           {
-            "excelName":"农清明细19-1资产负债表（组织类）（系统下载必填）.xls",
+            "excelName":"资产负债表（组织类）.xls",
             "newExcelStart":-1,
             "oldExcelCellArray":[
               {"row":10,"col":3},{"row":10,"col":5},{"row":10,"col":6},
@@ -63,7 +63,7 @@
         "sheetName":"表20-6",
         "newExcelList":[
           {
-            "excelName":"农清明细18-3资源性资产清查登记明细表-3（未利用地、附报）（系统下载）.xls",
+            "excelName":"资源性资产清查登记明细表-3（未利用地、附报）.xls",
             "newExcelStart":19,
             "oldExcelCellArray": [-1,7],
             "newExcelCellArray":[1,2]
@@ -76,40 +76,40 @@
     "excel":[
       {
         "name":"all-cun",
-        "modelName":"农清明细03-应收款项清查登记表（系统下载）.xls",
+        "modelName":"应收款项清查登记表.xls",
         "rowStart":7,
         "rowEnd":-1
       },
       {
         "name":"all-cun",
-        "modelName":"农清明细08-2固定资产清查登记表-2（非经营性固定资产）（系统下载）.xls",
+        "modelName":"固定资产清查登记表-2（非经营性固定资产）.xls",
         "rowStart":9,
         "rowEnd":-1,
         "cate":"机器设备"
       },
       {
         "name":"all-cun",
-        "modelName":"农清明细18-1资源性资产清查登记明细表-1（农用地）（系统下载）.xls",
+        "modelName":"资源性资产清查登记明细表-1（农用地）.xls",
         "rowStart":8,
         "rowEnd":-1,
         "cate":"林地"
       },
       {
         "name":"all-cun",
-        "modelName":"农清明细19-1资产负债表（组织类）（系统下载必填）.xls",
+        "modelName":"资产负债表（组织类）.xls",
         "rowStart":10,
         "rowEnd":10
       },
       {
         "name":"all-cun",
-        "modelName":"农清明细18-3资源性资产清查登记明细表-3（未利用地、附报）（系统下载）.xls",
+        "modelName":"资源性资产清查登记明细表-3（未利用地、附报）.xls",
         "rowStart":8,
         "rowEnd":-1,
         "cate":"未利用地"
       },
       {
         "name":"all-cun",
-        "modelName":"农清明细20资源性资产清查登记总表（系统下载）.xls",
+        "modelName":"资源性资产清查登记总表.xls",
         "rowStart":-1,
         "rowEnd":-1
       }
