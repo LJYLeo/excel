@@ -78,7 +78,11 @@
         "name":"all-cun",
         "modelName":"应收款项清查登记表.xls",
         "rowStart":7,
-        "rowEnd":-1
+        "rowEnd":-1,
+        "defaultValueArray":[
+          {"row":-1,"col":5},{"row":-1,"col":6},{"row":-1,"col":7}
+        ],
+        "defaultValue":0
       },
       {
         "name":"all-cun",
