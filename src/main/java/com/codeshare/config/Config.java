@@ -152,6 +152,21 @@ public class Config {
                 if (excel.has("tag")) {
                     Constants.newExcelCheckMap.put(modelName, excel.getString("tag"));
                 }
+                if (excel.has("defaultValueArray")) {
+                    JSONArray defaults = excel.getJSONArray("defaultValueArray");
+                    List<Map<String, Integer>> defaultList = new ArrayList<Map<String, Integer>>();
+                    for (int j = 0; j < defaults.size(); j++) {
+                        JSONObject defaultObject = defaults.getJSONObject(j);
+                        Map<String, Integer> defaultRowAndCol = new HashMap<String, Integer>(2);
+                        defaultRowAndCol.put("row", defaultObject.getInt("row"));
+                        defaultRowAndCol.put("col", defaultObject.getInt("col"));
+                        defaultList.add(defaultRowAndCol);
+                    }
+                    Constants.newExcelDefaultMap.put(modelName, defaultList);
+                }
+                if (excel.has("defaultValue")) {
+                    Constants.newExcelDefaultValueMap.put(modelName, excel.getString("defaultValue"));
+                }
             }
 
 

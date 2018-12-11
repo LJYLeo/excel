@@ -99,7 +99,7 @@ public class ExcelUtils {
      * @param type         0-村 1-组
      * @return
      */
-    private static String getNewDirector(String wholePath, String oldExcelName, int type) {
+    public static String getNewDirector(String wholePath, String oldExcelName, int type) {
 
         String path = Constants.resultExcelRootPath + "/其他";
 
@@ -171,7 +171,7 @@ public class ExcelUtils {
      * @param workBook
      * @param targetPath
      */
-    private static void createTargetExcel(HSSFWorkbook workBook, String targetPath) {
+    public static void createTargetExcel(HSSFWorkbook workBook, String targetPath) {
 
         FileOutputStream fos = null;
 
@@ -227,7 +227,7 @@ public class ExcelUtils {
      * @param oldData
      * @param modelData
      */
-    private static int fillValueToSheet(HSSFWorkbook modelWorkbook, String excelName, String model, HSSFSheet oldSheet, HSSFSheet newSheet, Excel oldData, Excel modelData) {
+    public static int fillValueToSheet(HSSFWorkbook modelWorkbook, String excelName, String model, HSSFSheet oldSheet, HSSFSheet newSheet, Excel oldData, Excel modelData) {
 
         int end = oldData.getEndRow() == -1 ? Integer.MAX_VALUE : oldData.getEndRow();
         int j = modelData.getStartRow();
@@ -287,6 +287,14 @@ public class ExcelUtils {
                             }
                         }
                     }
+                    // 设置默认值
+                    if (Constants.newExcelDefaultMap.get(model) != null) {
+                        for (Map<String, Integer> each : Constants.newExcelDefaultMap.get(model)) {
+                            if (newSheet.getRow(each.get("row")).getCell(each.get("col")).getCellType() == Cell.CELL_TYPE_BLANK) {
+                                newSheet.getRow(each.get("row")).getCell(each.get("col")).setCellValue(Double.parseDouble(Constants.newExcelDefaultValueMap.get(model)));
+                            }
+                        }
+                    }
                 } catch (Exception e) {
                     System.out.println("竖表值错误！");
                     e.printStackTrace();
@@ -342,7 +350,8 @@ public class ExcelUtils {
                         }
                     }
                 } catch (Exception e) {
-                    System.out.println("发生异常！程序继续执行！行：" + j + "，列：" + k + "，表：" + model + "，异常：" + e.toString());
+                    System.out.println("发生异常！程序继续执行！行：" + j + "，列：" + k + "，表：" + model);
+                    e.printStackTrace();
                 }
             }
             if (oldData.getEndRow() == -1 && emptyValueCount == oldData.getCell().size()) {
@@ -357,6 +366,15 @@ public class ExcelUtils {
             }
             if (!isSetValue) {
                 j--;
+            } else {
+                // 设置默认值
+                if (Constants.newExcelDefaultMap.get(model) != null) {
+                    for (Map<String, Integer> each : Constants.newExcelDefaultMap.get(model)) {
+                        if (newSheet.getRow(j).getCell(each.get("col")).getCellType() == Cell.CELL_TYPE_BLANK) {
+                            newSheet.getRow(j).getCell(each.get("col")).setCellValue(Double.parseDouble(Constants.newExcelDefaultValueMap.get(model)));
+                        }
+                    }
+                }
             }
         }
 
@@ -365,6 +383,9 @@ public class ExcelUtils {
     }
 
     private static Object[] checkCellType(HSSFCell cell) {
+        if (cell == null) {
+            return new Object[]{5, null};
+        }
         switch (cell.getCellType()) {
             // 数字
             case Cell.CELL_TYPE_NUMERIC:
@@ -390,7 +411,7 @@ public class ExcelUtils {
         }
     }
 
-    private static HSSFWorkbook createWorkBook(String path) {
+    public static HSSFWorkbook createWorkBook(String path) {
 
         HSSFWorkbook workBook = null;
         FileInputStream fis = null;
@@ -504,9 +525,11 @@ public class ExcelUtils {
         System.out.println(workBook.getSheet("表12").getRow(7).getCell(1).getStringCellValue());
         ExcelUtils.process();*/
 
-        /*HSSFWorkbook workbook = createWorkBook("/Users/liujiayu/Desktop/result/华山村/本级/农清明细03-应收款项清查登记表（系统下载）.xls");
-        /*System.out.println(workbook.getSheet("表12").getRow(38));
-        HSSFCell cell = workbook.getSheet("表12").getRow(38).getCell(12);*/
+        HSSFWorkbook workbook = createWorkBook("/Users/liujiayu/Desktop/老公专属/Excel新老表格转换/大港/农村集体资产清产核资--大港街道/聂家村/聂家村7组/农清明细09-2在建工程清查登记表-2（非经营性在建工程）（系统下载）.xls");
+        //System.out.println(workbook.getSheet("表12").getRow(0));
+        System.out.println(workbook);
+        HSSFCell cell = workbook.getSheetAt(0).getRow(8).getCell(4);
+        System.out.println(cell);
 //        Object[] value = checkCellType(cell);
         /*HSSFCell cell = workbook.getSheetAt(0).getRow(7).getCell(5);
         System.out.println(workbook.getSheetAt(0).getRow(7).getCell(5).getNumericCellValue());
@@ -517,8 +540,8 @@ public class ExcelUtils {
 
 //        System.out.println("2010-10-1".matches("\\d{4}-\\d{2}-\\d{2}"));
 
-        String name = "镇江市镇江新区姚桥镇迎北村迎北1";
-        System.out.println(name.substring(name.lastIndexOf("村") + 1));
+//        String name = "镇江市镇江新区姚桥镇迎北村迎北1";
+//        System.out.println(name.substring(name.lastIndexOf("村") + 1));
 
     }
 
