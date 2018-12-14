@@ -1,0 +1,35 @@
+[
+  {
+    "sheet":[
+      {
+        "sheetName":"表23-1",
+        "newExcelList":[
+          {
+            "excelName":"资产负债表（合并报表）.xls",
+            "newExcelStart":-1,
+            "oldExcelCellArray":[
+              {"row":10,"col":3},{"row":10,"col":5},{"row":10,"col":6},
+              {"row":10,"col":9},{"row":10,"col":11},{"row":10,"col":12},
+              {"row":10,"col":13},{"row":10,"col":15},{"row":10,"col":16},{"row":10,"col":20}
+            ],
+            "newExcelCellArray":[
+              {"row":6,"col":3},{"row":7,"col":3},{"row":8,"col":3},
+              {"row":9,"col":3},{"row":15,"col":3},{"row":18,"col":3},
+              {"row":19,"col":3},{"row":22,"col":3},{"row":23,"col":3},{"row":25,"col":7}
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "excel":[
+      {
+        "name":"all-cun",
+        "modelName":"资产负债表（合并报表）.xls",
+        "rowStart":10,
+        "rowEnd":10
+      }
+    ]
+  }
+]

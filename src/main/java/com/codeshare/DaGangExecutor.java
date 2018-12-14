@@ -16,11 +16,11 @@ import java.util.Map;
 public class DaGangExecutor {
 
     public static String oldPath = "/Users/liujiayu/Desktop/老公专属/Excel新老表格转换/大港/农村集体资产清产核资--大港街道";
-    public static String resultPath = "/Users/liujiayu/Desktop/老公专属/Excel新老表格转换/result";
+    public static String resultPath = "/Users/liujiayu/Desktop/老公专属/Excel新老表格转换/result_add";
 
     public static void main(String[] args) {
 
-        Config.loadVillageConfig("dagang_new.json");
+        Config.loadVillageConfig("dagang_add.json");
         File oldPathDirector = new File(oldPath);
         Map<String, Excel> oldCommonMap = Constants.oldExcelDataMap.get("all-cun");
         if (oldPathDirector.isDirectory()) {
